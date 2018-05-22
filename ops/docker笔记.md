@@ -89,11 +89,10 @@ newgrp docker
 - 删除镜像
 
   ```shell
-  docker image rm 镜像名[:标签]
-  docker rmi 镜像名[:标签]  #rmi只能删除 host 上的镜像，不会删除 registry 的镜像。
+  docker image rm <image>[:tag]  #或者docker image rm <镜像id>
+  docker rmi <image>[:tag]   #rmi只能删除 host 上的镜像，不会删除 registry 的镜像
   ```
 
-- scratch是一个空白镜像
 
 ## 从仓库获取镜像
 
@@ -109,7 +108,9 @@ docker pull unbuntu:17.04    #ubuntu 17.04
 #推送镜像到仓库
 docker push [选项] 镜像名[:标签] 用户名/镜像名
 ```
-　镜像仓库参看https://docs.docker.com/docker-cloud/builds/push-images/
+镜像仓库参看https://docs.docker.com/docker-cloud/builds/push-images/
+
+注：使用空白镜像可以`docker pull scratch`
 
 ## 构建镜像
 
@@ -176,15 +177,17 @@ docker push [选项] 镜像名[:标签] 用户名/镜像名
 
 # 容器操作
 
-## 容器状态
+以下示例代码中的`<container>`表示某个容器，可以使用容器的ID或容器的名字。
+
+## 查看状态
 
 ```shell
 #查询容器 不使用-a则只查看正在运行的容器
 docker ps -a
 #容器详情
-docker inspect 容器名或容器id
+docker inspect <container>
 #容器日志
-docker logs 容器名或容器id
+docker logs <container>
 ```
 
 ## 创建、修改和删除
@@ -192,7 +195,12 @@ docker logs 容器名或容器id
 ```shell
 #创建容器
 docker create -it base/archlinux
-docker create  -d -it --rm --name 容器名 --hostname 主机名 -p 宿主机端口:容器端口 base/archlinux /bin/bash
+
+# docker run -it --rm --name 容器名 --hostname 主机名 -v 宿主机目录:容器目录:读写权限 -p 容器端口:宿主机器端口 --network 网络 base/archlinux 要执行的命令
+
+# 以centos 镜像为基础创建一个名为webserver的容器
+# 主机名webserver 以只读权限挂载宿主机的/home/data到容器的/srv/web 使用主机网络 创建成功后立即进入bash shell
+docker run -it --name webserver --hostname webserver -v /home/data:/srv/web:ro --network host centos /bin/bash
 
 #重命名
 docker rename 原名 新名
@@ -205,7 +213,9 @@ docker rm `docker ps -a -q`
 docker rm -v $(docker ps -aq -f status=exited)
 ```
 
-`docker create`常用参数：
+### 创建
+
+`docker create`或`docker run`：create是创建一个容器，run是创建一个容器（并启动）执行指定命令。二者大部分参数一致，常用参数：
 
 - `-i`交互式操作
 - `-t`打开终端
@@ -213,13 +223,23 @@ docker rm -v $(docker ps -aq -f status=exited)
 
 - `--name 容器名` 参数给容器命名
 
-- `-d`以守护进程运行
+- `-d`以守护进程运行 （run的参数）
 
 - `-p 容器端口:宿主机器端口`  映射容器某个端口到宿主机某个端口
 
-- `--rm`使用后删除容器
-
 - `-h 主机名`或`--hostname 主机名 `设置主机名
+
+- `--ip 地址` 指定IP地址
+
+- `--network 网络类型`  指定[网络](#网络)类型
+
+- `-v 宿主机目录:容器目录`  挂载宿主机的卷到容器中（使用绝对路径）
+
+  还可以在容器目录后加上`:`然后指定访问权限
+
+  - `r`读
+  - `w`写
+  - `o`配合读写一起使用——如`ro`只读
 
 - 内存限额
 
@@ -257,48 +277,114 @@ docker rm -v $(docker ps -aq -f status=exited)
 
 - `/bin/bash`指定使用bash
 
+- `--rm`使用后删除容器
+
+### 修改和删除
+
+- 修改容器名 `dockerename <name> <new-name>`
+- 删除容器 `docker rm <container>`
+
 ## 启动、进入、重启和停止
+
+对已经创建的容器执行启动、进入、重启和停止等操作
 
 ```shell
 #docker [参数] 操作容器的命令  容器名或容器id
-docker start mycontainer
-#docker run 参数 容器名
-#运行一个容器 并在容器中执行pwd命令
-docker run centos
+#启动一个容器
+docker start <container>
+#进入已经运行的容器
+docker attach <container>
+#或者使用exec进入
+docker exec -it <container> bash
+#启动一个容器并直接进入
+docker start -a <container>
+
+#在容器中执行某条命令
+docker exec <container> <command>
+docker run <container> <command>
 ```
 
-这类命令有：
+### 启动、进入和退出容器终端
 
-- start 启用容器（以后台方式）
+- start 启用容器（默认以后台方式运行）
 
-- run 创建并运行容器
+  - `-a`  或 `--attach`  启动并进入容器终端  相当于组合执行start和attach
 
-  相当于`docker create`+`docker start`，可以使用`docker create`的各项参数。
+- 进入到已经启用的容器的终端
 
-- 连接到已经启用的容器
+  - attach 直接进入容器 **启动命令** 的终端，不会启动新的进程。**退出容器时，容器会停止。**
 
-  - attach 直接进入容器 **启动命令** 的终端，不会启动新的进程。
+  - exec 是在容器中打开新的终端，并且可以启动新的进程，退出容器时，容器仍可运行。
 
-    可通过 Ctrl+p 然后 Ctrl+q 组合键退出 attach 终端
+    使用exec时进入docker终端需要使用`-it`参数开启交互式tty并指定shell。（因为exec的主要作用是执行命令，而attach的作用则是为了连接到容器终端）
 
-  - exec 是在容器中打开新的终端，并且可以启动新的进程。
+    exec的一些参数：
 
-    exec的一些参数，如`-i`、`-t`（同docker run中`-i`和`-t`），`-u`指定用户，`-w`指定工作目录等等。
+    - `-i`  交互式操作  `-t`启用tty
+    - `-u`指定用户 `-w`指定工作目录
 
-- restart 重启容器
+- 退出容器终端
 
-  - 始终重启 参数`--restart=always`
-  - 指定重启次数 参数`--restart=on-failure:5`
+  - 可通过 Ctrl+p 然后 Ctrl+q 组合键
+  - `exit`
+  - `ctrl-c`
 
-- 停止
+### 重启、暂停、终止
 
+- 重启 restart
+- 暂停和恢复
+  - pause和unpause  暂停和从暂停中恢复
+- 终止
   - stop 停用容器
   - kill  发送 SIGKILL 快速停止容器
 
-- pause和unpause  暂停和从暂停中恢复
+### 运行容器中的命令
 
+exec 不进入容器终端而运行容器中的命令。
+
+`docker exec [option] <docker-name> <command>`
 
 # 网络
+
+docker的网络有默认和自定义两种，可在创建/启动容器时指定以下的网络。
+
+## 默认网络
+
+docker默认创建三种网络类型：bridge、host和none。创建容器时可以使用`--network`参数指定网络类型。
+
+可使用`docker network ls`查看：
+
+### bridge
+
+桥接网络，默认网络类型，默认使用docker安装时创建的桥接网络（可使用可以创建查看其配置）。每次docker容器重启时，会按照顺序从网桥配置的子网段中获取IP地址（默认网桥的网段为`172.17.0.0/16`）。
+
+### none
+
+无指定网络，不会分配局域网的IP。
+
+### host
+
+主机网络，容器的网络附属在主机上，配置相同，两者可以互通。 这种情况下不需要使用ip参数，指定port映射等。
+
+例如，在容器中运行一个Web服务，监听80端口，则主机的80端口就会自动映射到容器中。
+
+需要注意容器与宿主机可能发生的端口冲突。
+
+## 用户自定义网络
+
+用户自定义网络user-defined，有三种驱动类型：bridge、overlay和macvlan。
+
+- 创建  `docker network create --driver <类型> <网络名>`
+
+  ```shell
+  docker network create --driver bridge br0 --subnet 172.16.0.0/16 --gateway 172.16.0.251
+  ```
+
+  -  `--subnet 网段`  指定网段
+
+  -  `--gateway 网关地址`  指定网关
+
+- 查看  `docker network inspect <网络名>`
 
 # 存储
 

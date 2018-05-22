@@ -14,8 +14,6 @@ echo -e "\e[1m `uname -srm`\e[0m  \nGATEWAY:\e[1;32m$gateway\e[0m <-- IP:\e[1;35
 
 
 # ******** PATH ********
-#export PATH="$PATH:`yarn global bin`"
-
 # proxy | use privoxy transfer socks5 to http
 #export http_proxy=http://192.168.1.1:8010
 #export https_proxy=http://192.168.1.1:8010
@@ -101,6 +99,14 @@ alias grep='grep --color'
 
 # --- network---
 
+#web server
+alias np='sudo systemctl start nginx php-fpm'
+alias npre='sudo systemctl restart nginx php-fpm'
+alias npstop='sudo systemctl stop nginx php-fpm'
+alias nmp='sudo systemctl start nginx mariadb php-fpm'
+alias nmpre='sudo systemctl restart nginx mariadb php-fpm'
+alias nmpstop='sudo systemctl stop nginx mariadb php-fpm'
+
 # ssh server
 alias sshstart='sudo systemctl start sshd'
 
@@ -146,6 +152,12 @@ alias matrix='cmatrix'
 
 # starwar
 alias starwar='telnet towel.blinkenlights.nl'
+
+#aquarium
+alias aquarium='asciiaquarium'
+
+# npm -g list --depth=0
+alias npmlistg='sudo npm -g list --depth=0'
 
 # bash-powerline : https://github.com/riobard/bash-powerline
 source ~/.bash-powerline.sh

@@ -283,12 +283,26 @@ mkinitcpio -p linux
   ```
 
 
-## 设置时区
+## 时间
 
 保留windows用户可能还需要**参考后文[windows和linux统一使用UTC](#windows和linux统一使用UTC)** 。
+
+linux时钟分为系统时钟（system clock）和硬件时钟（Real Time Clock, RTC——即实时时钟，电脑主板记上的时钟）。
+
+（可选）设置时区前可以先查看和校准（如果需要）系统时间，了解硬件时钟的情况：
+
+```shell
+date #查看当前系统时间
+timedatectl  #查看系统时间、硬件时间、标准时间、ntp时间同步等设置情况
+date -s "2046-04-26 13:14:20"  #设置时间 ，格式：年-月-日 时:分:秒"
+ntpdate 0.arch.pool.ntp.org  #或者与从公共时间服务器同步时间
+```
+
+设置时区，将系统时间和硬件时间统一：
+
 ```shell
 ln -sf /usr/share/zoneinfo/Asia/Shanghai /etc/localtime    # 设置时区 示例为中国东八区标准时间--Asia/Shanghai
-hwclock --systohc --utc     #使用utc时间 推荐
+hwclock -w -u    #将当前系统时间写入到硬件时钟  并使用utc时间（推荐）
 ```
 ## 主机名
 

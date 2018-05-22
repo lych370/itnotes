@@ -2,22 +2,12 @@
 
 # 基本
 
-- 数据类型判断
-  - `typeof xx`  仅用于基本类型判断  ！注意：
-    - null是object
-    - 数组是object
-    - 能够判断function
-  - `xx.constractor`  通过构造函数判断
-  - `xx instanceof Array`  判断是否为某类型
-  - `Object.prototype.toString.call(xx)==='[object Array]'`   最保险的判断
-- Math.ramdom()生成的小数位数不是固定的
-
 
 - 容易被误用作标识符的JavaScript关键字：float、class、top
 
   在获取/设置元素的style属性时，浮动应该使用`cssFloat`而不是`float`
 
-- setTimeout的时间即使设置为0也会执行
+- setTimeout的时间即使设置为0也会执行（默认最小4ms）
 
   ```javascript
   setTimeout(function(){console.log(2)},0);  //后打印该行
@@ -76,4 +66,5 @@
 
     - 不再使用的事件绑定应该适时解除
     - 如果在某事件处理函数中对另一节点使用DOM2级进行事件绑定，务必记得对另一节点的事件绑定适时解除（或者改用DOM0级事件进行覆盖），否则该事件处理函数反复调用时会造成事件累加
+    - addEventListiner可以使用｛once:true}只绑定一次 //todo
 

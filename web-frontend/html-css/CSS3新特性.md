@@ -351,7 +351,7 @@ css 语法：`@media not|only|all mediatype and (expression){css-style}`（注�
 
   使用区别：
 
-  - `align-content`属性只适用于**多行子元素**（超过一行，当然如果主轴是垂直轴，则应该称为多列，下同）的 flex 容器，**如果只有一行子元素，该属性不起作用；**`align-items`适用于任意行子元素的`flex`容器。
+  - `align-content`属性只适用于**多行子元素**（超过一行，当然如果主轴是垂直轴，则应该称为多行，下同）的 flex 容器，**如果只有一行子元素，该属性不起作用；**`align-items`适用于任意行子元素的`flex`容器。
   - `align-content`是设置一列子元素在整个侧轴上的对其方式；而`align-items`是设置每个子元素在该行的高度范围内的侧轴上的对齐方式，相当于将侧轴按行平分，设置的是子元素在该行高度范围内的对齐方式。
 
 ## 弹性子元素flex-items的属性

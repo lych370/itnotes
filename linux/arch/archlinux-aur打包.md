@@ -55,6 +55,8 @@ pacman -U pkgname    #安装软件包
   ```shell
   #在服务器上建立一个名为name.git的新仓库(name一般是软件包名)
   git clone git+ssh://aur@aur.archlinux.org/name.git
+  #初始化仓库
+  git init
   #连接远程仓库
   git remote add origin git+ssh://aur@aur.archlinux.org/name.git
   ```

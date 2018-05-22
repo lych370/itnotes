@@ -51,14 +51,20 @@ LNMP（linux,nginx,mariadb,php）部署，以下默认在root权限下操作，�
 
 在`/etc/nginx/conf.d/`中新建一个.conf文件，如website.conf，内容如下(据情况修改)：
 ```nginx
-server {
-  listen 80;     #80是默认的端口
-  server_name www.xxx.com;    #服务器名
-  root /srv/web;    #ngnix默认的主目录，可根据具体情况修改
-  index index.html index.php;    #默认主页
-  charset utf-8,gbk;    #防止中文乱码可加上
+server{
+  listen 80;
+  server_name localhost;
+  root /srcv;
+  index index.html index.php;
+  charset utf-8,gbk;
 }
 ```
+
+- listen 监听端口
+- server_name 服务主机名
+- root 根目录
+- index 默认主页
+- charset 编码格式（默认为utf8，中文gbk会乱码）
 
 ### php解析
 

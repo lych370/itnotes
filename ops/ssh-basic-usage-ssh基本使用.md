@@ -12,6 +12,7 @@
 - g：允许连接到主机转发的端口。相当于临时设置`sshd_config`文件中的`GatewayPorts yes`
 - T：不分配TTY
 - q：安静模式（不输出错误/警告）
+- -v：显示详细信息（可用于排错）
 
 # 远程登录
 
@@ -55,21 +56,19 @@ ssh -p 2333 <user>@<host>     #-p指定端口（更改了默认端口22时需要
 
 
 
-注意：正确公钥后仍不能免密钥登录，确保：
+注意：正确公钥后仍不能免密钥登录，常见原因是存在多个密钥对或者密钥文件（夹）权限不对。还可以在登录命令中加入`-v`参数，从输入内容中获取信息。
 
-1. 上传到远程主机的公钥和本地存在的私钥为一对
+- 存在多个密钥对时，登录时使用`-i`指定**私钥** ：
 
-   默认使用的私钥位于`~/.ssh/`下，如果要指定私钥位置使用`-i`参数。
+  ```shell
+  ssh -i /path/to/private-key/ [-p port] <user>@<host>
+  ```
 
-   ```shell
-   ssh -i /path/to/private-key/ [-p port] <user>@<host>
-   ```
+- **~/.ssh/authorized_keys文件的权限为600**，**~/.ssh文件夹权限为700** ：
 
-2. 远程主机上用户的**~/.ssh/authorized_keys文件的权限为600**，**~/.ssh文件夹权限为700** ，权限过于开放（例如777）不能使用密钥登录。
-
-   ```shell
-   chmod 600 ~/.ssh/authorized_keys && chmod 700 ~/.ssh
-   ```
+  ```shell
+  chmod 600 ~/.ssh/authorized_keys && chmod 700 ~/.ssh
+  ```
 
 ## 保持ssh连接
 

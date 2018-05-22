@@ -17,9 +17,9 @@
   ```shell
   ipmitool lan print  #查看配置信息
   ipmitool lan print [数字]  #从0开始一个一个试 找到该设备上默认的ipmi的channel值
-  ipmitool lan set 1 ipaddr 192.168.1.100  #IP  #这里假设channel时1 下同
+  ipmitool lan set 1 ipaddr 192.168.0.100  #IP  #这里假设channel时1 下同
   ipmitool lan set 1 netmask 255.255.255.0  #子网掩码
-  ipmitool lan set 1 defgw ipaddr 192.168.1.1  #网关
+  ipmitool lan set 1 defgw ipaddr 192.168.0.1  #网关
   ipmitool lan set 1 access on  #启用 （off为关闭）
   ```
 
@@ -30,15 +30,17 @@
   ```shell
   ipmitool user list 1  #查看当前用户列表
   ipmitool user set name <user id> <username>   #修改用户名
-  ipmitool user set password <user id>  #设置admin密码（密码可能有位数要求）
+  ipmitool user set password <user id>  #设置admin密码 执行后输入两次新密码
   ```
+  **注意**：密码可能有位数要求(一般最少8位），密码过短会返回错误信息。
+
   更多命令帮助，在`ipmitool user`回车后可查看。
 
 - 检查
 
   ```shell
-  ping 192.168.1.100
-  ipmitool -H 192.168.1.100 -U admin power status  #会返回power is on
+  ping 192.168.0.100
+  ipmitool -H 192.168.0.100 -U admin power status  #会返回power is on
   ```
 
 # WEB管理

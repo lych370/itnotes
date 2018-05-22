@@ -30,7 +30,6 @@ cobbler运行流程：
 
   KickStart的工作原理：将典型的安装过程中所需人工干预填写的各种参数写入到ks.cfg的文件；在安装过程中（不只局限于生成KickStart安装文件的机器），当出现要求填写参数的情况时，安装程序会首先去查找ks.cfg文件的参数，依照设置的参数进行自动操作。
 
-
 ---
 
 # 准备工作
@@ -251,7 +250,7 @@ service tftp {
     protocol         = udp
     wait                 = yes
     user                 = root
-    server             = /usr/sbin/in.tftpd  #tftp服务根目录
+    server             = /usr/sbin/in.tftpd
     server_args  = -B 1380 -v -s /var/lib/tftpboot
     per_source   = 11
     cps                   = 100 2

@@ -142,6 +142,7 @@
 # 文件管理
 
 - extundelete  恢复删除的ext分区中的文件
+- ncdu  硬盘使用分析
 
 ## 打包、压缩和解压
 
@@ -211,8 +212,8 @@
 
 - 相片管理
   - digikam  （plasma）
-  - pantheon-photos   （pantheon）
   - shotwell
+  - darktable  组织和管理raw格式照片
 
 ## 音频
 
@@ -255,6 +256,7 @@
 - moonplayer    中国的在线视频网站视频播放[github:moonplayer](https://github.com/coslyk/moonplayer)
   - 插件   [moonplayer-plugins](https://github.com/coslyk/moonplayer-plugins)
 - yout-get   配合视频播放器观看
+- popcorntime  支持torrent流媒体播放
 
 ### 视频编辑
 
@@ -304,6 +306,7 @@
 
 - scribus     出版物设计软件（设计杂志、海报、演示稿件等等）
 - mockingbot   [墨刀](http://modao.cc) 原型设计工具
+- xournal  支持手写的笔记本
 - pencil     设计稿制作（web页面、桌面程序界面、移动应用界面……）
 - dia    示意图制作（丰富的类型：流程图、UML、气象、地理、工程……）
 - 思维图
@@ -449,5 +452,4 @@
   - cal    自如界面月历
   - ccal   字符界面中国日历
   - chinese-calendar  农历（带日程便签功能）
-  - wunderlistux  奇妙清单
   - gnome-todo  代办事项 可连接todoist

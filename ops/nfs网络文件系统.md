@@ -4,7 +4,9 @@
 
 # 安装
 
-服务端和客户端均安装`nfs-utils`
+服务端和客户端均安装`nfs-utils`、`rpcbind`和`portmap`
+
+portmap为nfs提供rpc(Remote Procedure Call)支持。
 
 # 服务端配置
 
@@ -72,7 +74,7 @@ systemctl start rpcbind && systemctl enable rpcbind
 - 扫描服务器nfs共享目录
 
   ```shell
-  showmount -e <ip地址>
+  showmount -e <地址>
   ```
 
 - 使用mount 挂载示例
@@ -86,7 +88,7 @@ systemctl start rpcbind && systemctl enable rpcbind
   写入`/etc/fstab`， 示例：
 
   ```shell
-  192.168.0.101:/srv/share   /srv/share  nfs  default	0 0
+  192.168.0.101:/srv/share   /srv/share  nfs  default,_netdev	0 0
   ```
 
 ## 常见错误
