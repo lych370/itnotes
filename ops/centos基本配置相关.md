@@ -81,6 +81,12 @@ centos7默认不启用iptables，可对firewall和selinux进行安全策略配�
   - 临时关闭：`setenforce 0`
   - 永久关闭：编辑`/etc/sysconfig/selinux`，将其中的`SELINUX=enforcing`修改为`SELINUX=disabled`，重启后生效（也可执行`setenforce 0`暂时关闭）。
 
+# 常用工具包
+
+最小化安装后可能缺少某些命令，需要安装相应的软件包。下面列表中，前面为命令名，后面为安装包名。
+
+- cpuinfo  
+
 # 其他
 
 - 软件包版本锁定工具`yum-version-lock`

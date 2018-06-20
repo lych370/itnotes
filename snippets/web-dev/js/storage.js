@@ -1,3 +1,5 @@
+import { debug } from 'util';
+
 //存储各种信息
 const storage = {
   //存入数据
@@ -10,15 +12,20 @@ const storage = {
   },
   //取出数据
   get(key) {
-    if (sessionStorage.getItem(key)) {
-      return JSON.parse(sessionStorage.getItem(key))||[];
+    try {
+      if (sessionStorage.getItem(key)) {
+        return JSON.parse(sessionStorage.getItem(key));
+      } else if (localStorage.getItem(key)) {
+        return JSON.parse(localStorage.getItem(key));
+      }
+      return null;
+    } catch (err) {
+      if (err.name === 'SyntaxError') {
+        //eslint-disable-next-line no-console
+        console.log('存储内容不是JSON类型');
+        return false;
+      }
     }
-    return JSON.parse(localStorage.getItem(key)) || [];
-  },
-  //当前用户的登录数据
-  loginData: {
-    save() {},
-    get() {}
   },
   //删除数据
   remove(key) {

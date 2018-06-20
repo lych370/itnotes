@@ -53,18 +53,20 @@
 
 参看[MDN-this](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Operators/this)
 
-- 定义时就能确定this：箭头函数中的this -- [其定义时的外层对象](#this)
+- 定义时就能确定this：
+  - 箭头函数中的this -- [其定义时的外层对象](#this)
+  - 显式地设置this：call/apply/bind方法的第一个参数
+  - ajax回调方法中的this -- XMLHttpRequest对象
 
 
 - 执行时才能确定this—指向调用它的对象
 
-  注：浏览器中this是window，node中window是global；但严格模式下this则是undefined。
+  注：浏览器全局对象this是window，而node中是global，严格模式下则是undefined。
 
   - 全局范围内使用 -- 全局对象
   - 函数调用 -- 全局对象
   - 方法调用 -- 方法所属的对象
   - 调用构造函数 -- 新创建的实例对象
-  - 显式地设置this：call/apply/bind方法的第一个参数
 
   **如果call和apply的第一个参数写的是null，那么this指向的是全局对象。**
 

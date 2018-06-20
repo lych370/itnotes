@@ -54,7 +54,7 @@
 
 [gnome-look](gnome-look.org)或源中可下载一些主题图标，也可使用[ocsstore](https://www.linux-apps.com/p/1175480/)下载，一些主题如：
 
-- gtk主题：arc osx-arc materia candy  united paper vertex adapta 
+- gtk主题：arc materia candy  united paper vertex adapta 
 - 图标主题：numix-circle papirus masalla paper flattr moka la-capitaine-icon-theme
 - 鼠标主题：osx-elcap xcursor-flatbed xcursor-numix numix-cursor-theme neoalien
 

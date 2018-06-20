@@ -67,21 +67,18 @@ vertical-align的使用效果要分为以下不同情况：
 
   多用于图文排版，将图片和文字进行垂直对齐。
 
-  使用伪元素（也可以`.wrap`的父元素和兄弟元素进行居中，将下面代码中的`.wrap::before`换成`.wrap`的兄弟元素的选择器即可）
-
   ```css
   .wrap::before{ //或者::after
     content: '';
     display: inline-block;
     height: 100%;
-    display:inline-block;
     vertical-align: middle;
   }
   ```
 
   注意：
 
-  - 直接对一个inline-block元素（block、list-item元素更不必说）元素设置`vertical-align:middle`往往不能让其内部的达到预期的垂直居中效果，因为：
+  - 直接对一个inline-block元素（或block、list-item）设置`vertical-align:middle`往往不能让其内部的达到预期的垂直居中效果，因为：
 
     > vertical-align大部分取值是**相对于父元素**来说的
 

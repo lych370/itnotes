@@ -155,7 +155,9 @@ ele.onclick=function(ev){
 
 # 事件委托
 
-将事件“委托”给父节点，用解决事件处理程序过多的情况。例如对某ul下的多个li添加点击事件处理程序：
+将事件“委托”给父节点，事件触发时，根据一定的条件进行筛选，对实际触发该事件的元素对象添加处理程序。
+
+例如对某ul下的多个li添加点击事件处理程序：
 
 ```javascript
 const list = document.getElementById('lists') //获取id为lists的ul对象
