@@ -46,16 +46,19 @@
 
 ### 下载工具
 
--   命令行     
-    -   aria2（或aria2c） 多协议下载工具
-    -   axel  支持多线程和断点续传的HTTP/ftp下载工具
-    -   you-get  支持多个视频网站（youku、iqiyi、bilibili、qq……等网站），相关介绍查看[github:you-git](https://github.com/soimort/you-get)。可使用you-get和本地播放器观看视频：
-    ```bash
-    you-get -p mpv url    #mpv是要调用的播放器，url是视频所在网页地址。
-    #更多选项查看   you-get --help
-    ```
+- 命令行
+    - aria2（或aria2c） 多协议下载工具
 
--   图形化
+    - axel  支持多线程和断点续传的HTTP/ftp下载工具
+
+    - you-get  支持多个视频网站（youku、iqiyi、bilibili、qq……等网站），相关介绍查看[github:you-git](https://github.com/soimort/you-get)。可使用you-get和本地播放器观看视频：
+
+      ```shell
+      you-get -p mpv url    #mpv是要调用的播放器，url是视频所在网页地址。
+      #更多选项查看   you-get --help
+      ```
+
+- 图形化
 
     -   uget  调用aria2和curl
 

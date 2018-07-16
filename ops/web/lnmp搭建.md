@@ -54,7 +54,7 @@ LNMP（linux,nginx,mariadb,php）部署，以下默认在root权限下操作，�
 server{
   listen 80;
   server_name localhost;
-  root /srcv;
+  root /srv;
   index index.html index.php;
   charset utf-8,gbk;
 }

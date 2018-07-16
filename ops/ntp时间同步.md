@@ -4,13 +4,15 @@
 
 # 配置
 
+配置`/etc/ntpd.conf`示例概览：
+
 ```shell
 restrict 192.168.0.251 noquery  #禁止该主机查询时间
 restrict 192.168.0.0 mask 255.255.255.0 nomodify  #禁止该网段来源的主机修改时间
 
 #以下两个是默认值
 restrict 127.0.0.1
-restrict -6 ::1
+restrict -6 ::1     #ipv6使用
 
 server 0.arch.pool.ntp.org  #同步时间的服务器
 server 1.arch.pool.ntp.org prefer  #优先使用该服务器

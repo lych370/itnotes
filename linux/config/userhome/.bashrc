@@ -8,12 +8,14 @@
 # ******** Default display ********
 PS1="[\u @ \h > \w ] \$ "
 
-innerip=`ip addr | grep -o -P '1[^2][0-9?](\.[0-9]{1,3}){3}(?=\/)'`
-gateway=`ip route | grep 'via' |cut -d ' ' -f 3`
+innerip=`ip addr | grep -o -P '1[^2]?[0-9]?(\.[0-9]{1,3}){3}(?=\/)'`
+gateway=`ip route | grep 'via' |cut -d ' ' -f 3 |uniq`
 echo -e "\e[1m `uname -srm`\e[0m  \nGATEWAY:\e[1;32m$gateway\e[0m <-- IP:\e[1;35m$innerip\e[0m \n \e[1;36m `date` \e[0m"
 
 
 # ******** PATH ********
+#export PATH="$PATH:`yarn global bin`"
+
 # proxy | use privoxy transfer socks5 to http
 #export http_proxy=http://192.168.1.1:8010
 #export https_proxy=http://192.168.1.1:8010
@@ -77,7 +79,7 @@ alias tree='tree -C -L 1 --dirsfirst'
 # ===system===
 
 # Arch
-alias up='pacman -Syu && trizen -Syua'
+alias up='yay'
 alias pacman='sudo pacman'
 alias orphan='pacman -Rscn $(pacman -Qdttq)' 
 
@@ -97,10 +99,10 @@ alias la='ls -lah'
 alias cp='cp -i'
 alias grep='grep --color'
 
-# --- network---
 
 #web server
 alias np='sudo systemctl start nginx php-fpm'
+alias nginxstart='sudo systemctl start nginx'
 alias npre='sudo systemctl restart nginx php-fpm'
 alias npstop='sudo systemctl stop nginx php-fpm'
 alias nmp='sudo systemctl start nginx mariadb php-fpm'
@@ -158,6 +160,13 @@ alias aquarium='asciiaquarium'
 
 # npm -g list --depth=0
 alias npmlistg='sudo npm -g list --depth=0'
+
+# stocks
+alias stock="curl -s http://hq.sinajs.cn/list=sz000066|iconv -f gbk -t utf8|cut -d ',' -f 4 && curl -s http://hq.sinajs.cn/list=sz000670|iconv -f gbk -t utf8|cut -d ',' -f 4 && curl -s http://hq.sinajs.cn/list=sh600555|iconv -f gbk -t utf8|cut -d ',' -f 4"
+
+# no network
+
+alias nonetwork='killall megasync geary telegram-desktop ss-qt5 workrave'
 
 # bash-powerline : https://github.com/riobard/bash-powerline
 source ~/.bash-powerline.sh

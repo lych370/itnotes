@@ -72,6 +72,8 @@ YPPASSWDD_ARGS="--port 1012"
 
    如果运行出现错误则根据错误提示信息进行解决后再生成资料库。
 
+   如果无需配置hosts，直接执行`make -C /var/yp`生成资料库即可。
+
 3. 重启`ypserv`服务
 
 ## 测试
@@ -115,7 +117,7 @@ NISDOMAIN=cluster
 domain domainname server 192.168.10.1  #domainname换成实际的域名
 ```
 
-### 用户密码认证顺序/etc/nsswitch.conf 
+### 服务搜索顺序/etc/nsswitch.conf 
 
 `/etc/nsswitch.conf`用于管理系统中多个配置文件查找的顺序，系统将按照配置中的顺序去查找用户信息文件。
 

@@ -5,7 +5,7 @@
   CentOS7默认开启NetworkManager服务。
 
   - network和NetworkManager不能同时生效，如果两个服务同时存在，则默认启用NetworkManager。
-  - 如果在安装时配置了网络参数，或者/etc/network/interfaces文件中进行了手动配置，则会默认启用network服务。
+  - 如果在安装时配置了网络参数，或者`/etc/network/interfaces`文件中进行了手动配置，则会默认启用network服务。
 
 - 使用network
 
@@ -65,7 +65,7 @@ yum update  #更新一下
 ```
 # 防火墙和selinux
 
-centos7默认不启用iptables，可对firewall和selinux进行安全策略配置。如果要关闭二者，参考如下：
+centos7默认启用firewall和selinux进行安全策略配置。如果要关闭二者，参考如下：
 
 - 关闭防火墙
 
@@ -80,6 +80,16 @@ centos7默认不启用iptables，可对firewall和selinux进行安全策略配�
   - 查看selinux状态  `getenforce`
   - 临时关闭：`setenforce 0`
   - 永久关闭：编辑`/etc/sysconfig/selinux`，将其中的`SELINUX=enforcing`修改为`SELINUX=disabled`，重启后生效（也可执行`setenforce 0`暂时关闭）。
+
+# 安装桌面
+
+以安装gnome为例
+
+```shell
+yum groupinstall "GNOME Desktop"
+systemctl enable gdm
+systemctl start gdm
+```
 
 # 常用工具包
 

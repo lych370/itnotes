@@ -32,7 +32,9 @@ ssh -p 2333 <user>@<host>     #-p指定端口（更改了默认端口22时需要
 
 ## 使用密钥免密码登录
 
-1. 生成密钥
+### 生成和上传密钥
+
+1. 生成密钥——生成非对称加密的密钥对
 
    ```shell
    ssh-keygen   #根据提示选择或填写相关信息
@@ -43,32 +45,59 @@ ssh -p 2333 <user>@<host>     #-p指定端口（更改了默认端口22时需要
    - f：密钥放置位置
    - N：为密钥设置密码
 
-2. 上传密钥
+2. 上传密钥——将密钥对中的公钥上传到ssh服务器
 
    ```shell
    ssh-copy-id <user>@<host>
    ssh-copy-id -i ~/.ssh/test.pub <user>@<host>  #有多个公钥时可使用参数-i指定一个公钥
    ```
 
-提示：上传时和上传后的首次登录需要输入密码。
+   提示：上传时需要输入密码。
 
-手动添加公钥：将客户端生成的**`id_rsa.pub`**内容添加到服务端的`~/.ssh/authorized_keys`中。
+   如要手动添加公钥：可将客户端生成的**`id_rsa.pub`**内容添加到服务端的`~/.ssh/authorized_keys`中。
 
 
 
-注意：正确公钥后仍不能免密钥登录，常见原因是存在多个密钥对或者密钥文件（夹）权限不对。还可以在登录命令中加入`-v`参数，从输入内容中获取信息。
+### ssh登录失败原因
 
-- 存在多个密钥对时，登录时使用`-i`指定**私钥** ：
+提示：可以在登录命令中加入`-v`参数，从输入内容中获取信息。
+
+- 权限问题（客户端或服务端）
+
+  **~/.ssh/authorized_keys文件的权限为600**，**~/.ssh文件夹权限为700**
+
+  ```shell
+  chmod 600 ~/.ssh/authorized_keys && chmod 700 ~/.ssh
+  ```
+
+- 客户端存在多个密钥对
+
+  ssh默认使用的私钥可能和服务器上保存的客户端公钥并不是一对，可在登录时使用`-i`指定**私钥** ：
 
   ```shell
   ssh -i /path/to/private-key/ [-p port] <user>@<host>
   ```
 
-- **~/.ssh/authorized_keys文件的权限为600**，**~/.ssh文件夹权限为700** ：
+- 严格的主机密钥检查不通过——服务器的公钥发生了变更
 
-  ```shell
-  chmod 600 ~/.ssh/authorized_keys && chmod 700 ~/.ssh
-  ```
+  ssh客户端首次登录ssh服务器时，客户端会记录服务器的公钥信息到`~/.ssh/known_hosts`（已知主机列表）文件中。
+  而后每次客户端登录该服务器时，会先将`.ssh/know_hosts`中的公钥与服务器的公钥进行对比，二者一致才会通过校验。
+
+  当ssh服务器公钥发生变化后，客户端的know_hosts中信息若未随之更新，就会校验不通过。
+
+  解决方案：
+
+  - 删除客户端`.ssh/known_hosts`文件中检查不通过的ssh服务器的公钥信息
+
+  - 关闭客户端的严格主机密钥检查(strict host key check)
+
+    在`.ssh/config`（或`/etc/ssh/ssh_config`）中添加
+
+    ```shell
+    StrictHostKeyChecking no
+    ```
+
+  如果无需严格的主机密钥检查，也可以将已知主机信息文件指向`/dev/null`。
 
 ## 保持ssh连接
 
@@ -101,7 +130,11 @@ ssh root@192.168.1.11 whoami
 ssh root@192.168.1.11 'mkdir -p .ssh && cat >> .ssh/authorized_keys' < ~/.ssh/id_rsa.pub
 ```
 
-- command要执行的命令
+如果是交互式操作，例如使用vim操作远程主机的文件，配合scp使用，示例：
+
+```shell
+vim scp://<user>@<host>[:port]//path/to/file
+```
 
 # 端口转发（ssh隧道）
 
@@ -226,6 +259,10 @@ scp -P 999 ~/.ssh/id_rsa.pub root@ip:/root.ssh/authorized_keys
 > sftp://192.168.1.100:22/home/<user>/path/to/file
 
 # 服务器安全策略
+
+- 工具
+  - [denyhosts](https://github.com/denyhosts/denyhosts)
+  - [fail2ban](https://github.com/fail2ban/fail2ban)
 
 - 在`/var/log/secure`可查看到失败的ssh登录记录
 - 禁止指定ip登录ssh
