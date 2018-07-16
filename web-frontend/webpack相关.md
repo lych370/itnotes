@@ -126,7 +126,7 @@ loader的配置内容放置于webpack配置文件中module对象下的rules对�
 
 ```javascript
 optimization: {
-  //minimize:true //压缩 如果mode位production则自动启用
+  //minimize:true //压缩 如果mode为production则自动启用
   //chunk 提取模块
   runtimeChunk: 'single',  //按runtime提取
   
@@ -166,9 +166,11 @@ plugins——插件，在Webpack 构建流程中的特定时机注入扩展逻�
 
 ### html-webpack-plugin
 
-将指定模板文件（默认ejs）生成为html页面，并将符合条件的entry中的js模块（及其他文件）使用`<script src="xxx">`的方式插入到生成的html中。
+主要作用是将指定的模板文件（默认ejs）生成为html页面，并将入口文件（entry）中符合配置要求（chunk选项）的js模块使用`<script src="xxx">`的方式插入到生成的html中。
 
-该示例中，`/src/index.html`将生成为output指定目录下的`index.html`（output默认为项目根目录下的`dist`内，如果未更改默认目录，该html也就为`dist/index.html`）：
+html生成在出口（output）配置的路径下——默认为dist/。
+
+该示例中，`/src/index.html`将生成为output指定目录下的`index.html`：
 
 ```javascript
 new htmlWebpackPlugin({
@@ -187,28 +189,72 @@ new htmlWebpackPlugin({
 
 生成多个页面时多次使用`new htmlWebpackPlugin`即可。
 
-
-
-注意：如果模板文件使用html，html文件中非ejs语法内容将不被解析。常见的就是配置了`html-loader`，在html文件中引用其他资源。
-例如该示例中，该html文件中引用了另一个html文件，希望通过`html-loader`的解析而将另一个html文件拼接进来，如果该html文件又被当作html-webpack-plugin配置中的模板文件，则会无法被解析。
-
-```javascript
-<%= require('./common/header.html') %>
-```
-
-可以选以下方法解决：
-
-- 模板文件均改用ejs
-
-- 去掉webpack配置中html-loader相关内容，html模板文件内单独指定`html-loader`进行解析
-
-  ```javascript
-  <%= require('html-loader!./common/header.html') %>
-  ```
-
 ### html-loader
 
-可以加将html文件内容当作字符串处理，例如填充页面的公用html部分。具体配置使用参见官方文档。
+可以加将html文件内容当作字符串处理，实现公共html部分的复用。
+
+配置loader：
+
+```javascript
+ {
+     test: /\.(html)$/,
+         use: {
+             loader: 'html-loader'
+          }
+}
+```
+
+示例在一个html中引用另一个公共html代码片段。公共文件head.html内容为：
+
+```html
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta http-equiv="X-UA-Compatible" content="ie=edge" />
+<link rel="shortcut icon" href="static/img/logo.png" type="image/png" />
+```
+
+在其他页面html的`<head></head>`中引用head.html，该页面打包后，head.html内容会嵌入到`<head></head>`中：
+
+```html
+<html>
+    <head
+		<%= require('.head.html') %>
+	</head>
+</html>
+```
+
+如果使用了html-webpack-plugin，二者可能发生冲突，参看[html-webpack-plugin和html-loader冲突](#html-webpack-plugin和html-loader冲突)。
+
+具体配置使用参见官方文档。
+
+### html-withimg-loader
+
+[html-withimg-loader](https://github.com/wzsxyz/html-withimg-loader)配置loader：
+
+```javascript
+loaders: [
+    {
+        test: /\.(htm|html)$/i,
+        loader: 'html-withimg-loader'
+    }
+]
+```
+
+- 可直接在html的img标签的src中使用图片路径
+
+  src地址无需使用下面的require()方式：
+
+  ```html
+  <img src={require('image.png')} />
+  ```
+
+- 还支持引用html子页面（参看[html-loader](#html-loader)中描述的在一个html中引用另一个html代码片段），引用方法：
+
+  ```html
+  <div>
+      #include("./head.html")
+  </div>
+  ```
 
 ## CSS
 
@@ -390,6 +436,14 @@ url-loader包含file-loader，url-loader主要用于处理小图片，其可以�
 }
 ```
 
+html或js中引用的图片大于limit的值时，要使用reqiure：
+
+```html
+<img src={require('../img/image.png')} />
+```
+
+或使用[html-withimg-loader](https://github.com/wzsxyz/html-withimg-loader)
+
 ## copy-webpack-plugin复制文件
 
 将指定文件复制到目标（打包文件目录下）路径处。例如希望将src/fonts目录复制到src/dist/fonts，
@@ -463,6 +517,40 @@ module.exports = {
 
 ## 经验
 
-- 如果被导入的模块中导入了css，那么这个css会连带导入，该css的内容会被重复打包
+### css重复打包问题
 
-  例如page1.js中import了页面共用头部的header.js文件，而header.js中import 'header.css'，那么header.css的内容会被page1.js再导入依次，相当于又将header.css打包了一次。
+如果被导入的模块中导入了css，那么这个css会连带导入，该css的内容会被重复打包
+
+例如page1.js中import了页面共用头部的header.js文件，而header.js中import 'header.css'，那么header.css的内容会被page1.js再导入依次，相当于又将header.css打包了一次。
+
+### html-webpack-plugin和html-loader冲突
+
+如果html-webpack-plugin的模板文件(template)为html文件，则模板html文件中html-loader的相关代码将不能被html-loader解析。
+
+例如在html中使用以下方式导入另一个html
+
+```shell
+<%= require('./common.html') %>
+```
+
+该语句将原样输出。可选解决方式：
+
+- **删除html-loader相关配置**，在reqiure语句中指定html-loader
+
+  ```javascript
+  <%= require('html-loader!./common.html') %>
+  ```
+
+- 将模版文件全部替换成ejs文件
+
+### 图片文件打包问题
+
+使用file-loader/url-loader后，图片体积大于url-loader配置中的limit的不会被打包（小于url-loader配置中limit的将被转化为base64）。可选解决方式：
+
+- 使用reqiure
+
+  ```html
+  <img src={require('../img/image.png')} />
+  ```
+
+- 使用[html-withimg-loader](https://github.com/wzsxyz/html-withimg-loader)
