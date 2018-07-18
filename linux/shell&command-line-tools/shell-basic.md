@@ -2,29 +2,26 @@
 
 # 简介
 
+## 概念
+
 Shell 是一个用 C 语言编写的程序，Shell 既是一种命令语言，又是一种程序设计语言。
 
-- Shell 是指一种应用程序，这个应用程序提供了一个界面，用户通过这个界面访问操作系统内核的服务。
+> Shell 是指一种应用程序，这个应用程序提供了一个界面，用户通过这个界面访问操作系统内核的服务。
+>
+> Ken Thompson 的 sh 是第一种 Unix Shell，Windows Explorer 是一个典型的图形界面 Shell。
 
-  Ken Thompson 的 sh 是第一种 Unix Shell，Windows Explorer 是一个典型的图形界面 Shell。
+- shell分类
+   - Bourne：常见的是sh(Bourne Shell)和bash(Bourne Again Shell)，还有fish、zsh等等
+   - C：cshell、tcsh（BSD的Unix)
 
-- **Shell 脚本（shell script）**，是一种为 shell 编写的脚本程序。
-
-- **Shell环境**:运行shell脚本的环境。
-
-shell分类
-
- - Bourne：常见的是sh(Bourne Shell)和bash(Bourne Again Shell)，还有fish、zsh等等
- - C：cshell、tcsh（BSD的Unix)
-
-以下以bash为默认shell。
+  以下以bash为默认shell。
 
 - shell查看
 
-```shell
-echo $SHELL    #查看当前使用的shell
-cat /etc/shells    #查看当前系统支持的shell
-```
+  ```shell
+  echo $SHELL    #查看当前使用的shell
+  cat /etc/shells    #查看当前系统支持的shell
+  ```
 
 - 扩展名sh：脚本文件**可以不使用扩展名** （但是使用扩展名sh，shell可以为代码提供颜色高亮）。
 
@@ -32,8 +29,12 @@ cat /etc/shells    #查看当前系统支持的shell
 
   shebang，即sharp--`#`和ban--`!`的联合缩写。
 
-  - 脚本需要有执行权限：`chmod +x file.sh`。
-  - 执行方法：`./file.sh`或`bash file.sh`（如果脚没有shebang则只能用后一种方式执行）。
+- 为脚本添加执行权限：`chmod +x file.sh`。
+
+- 执行脚本：
+
+  - 脚本有可执行权限：`./file.sh``
+  - 脚本无可执行权限：``bash file.sh`
 
 - 命令别名alias
 
@@ -691,10 +692,11 @@ esac
 
 ```shell
 for var in value1 value2 value3
-#for var in $("string")  #数组
+#for var in ${arr[*]}  #数组
 #for var in $(cat testfile)  #从文件中获取变量列表
-#也可以这样写，注意：shell中不能写诸如i+=1或i++
-#for ((i=1;i<=100;i=i+1))
+
+#也可以这样写，注意：shell中不能写i+=1
+for ((i=1;i<=100;i=i+1))
 do
 	#some codes
 done
@@ -755,6 +757,23 @@ function name (){
 - `source filename`    （如` source .test.sh` ）
 
 **注：**被包含的文件可以没有可执行权限。
+
+# 执行外部脚本
+
+- **fork**——直接在脚本里面执行脚本
+
+  将新开一个shell来执行，子 Shell 可以从父 Shell 继承环境变量，但是子 Shell 中的环境变量不会带回给父 Shell。
+
+  - 如果脚本有执行权限：`path/to/file.sh`
+  - 如果没有执行权限：`sh path/to/file.sh`——建议
+
+- **exec**： `exec path/to/file.sh`
+
+  不需要新开一个子 Shell 来执行被调用的脚本，被调用的脚本与父脚本在同一个 Shell 内执行。
+
+- **source**: `source path/to/file.sh`
+
+  同一个 Shell 中执行，在被调用的脚本中声明的变量和环境变量, 都可以在主脚本中进行获取和使用，相当于合并两个脚本在执行。
 
 # 向脚本传递参数
 
