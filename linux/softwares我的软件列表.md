@@ -108,7 +108,7 @@
 
 - lantern    [蓝灯项目](https://github.com/getlantern/lantern)
 
-- hosts  
+- hosts
 
   - [github-googlehosts/hosts](https://github.com/googlehosts/hosts)
 
@@ -116,7 +116,7 @@
 
   - [switchhosts](https://github.com/oldj/SwitchHosts)  快速切换hosts
 
-- 代理管理
+- 代理转发
   - proxychains    可TCP转发socks5/http，配置好代理后执行  `proxychains 程序名`
   - privoxy    可以转发socks5为http（可用于屏蔽广告等）
 
@@ -124,7 +124,7 @@
 
 ### 电子邮件
 
-- thunderbird 
+- thunderbird
 - geary  简洁风格（gnome系）
 - gnome的evolution和kde的kmail
 
@@ -133,7 +133,7 @@
 - [telegram](https://telegram.org/)  （特色：安全加密）
 - [slack](https://slack.com/)    （特色：办公协作、工具聚合）
 - [discord](https://discordapp.com/)   （特色：游戏互动、可自建服务器）
-- skypeforlinux     官方的skype  
+- skypeforlinux     官方的skype
 - polari   irc客户端(gnome系)
 - electronic-wechat   微信electronic版
 - [gitter](https://gitter.im/ )  （特色：配合github的开发者聊天工具）
@@ -316,7 +316,7 @@
   - vym
   - labyrinth
   - freemind
-  - xmind  
+  - xmind
 
 
 ## markdown编辑器
@@ -366,7 +366,7 @@
 - sl    一辆小火车奔驰而过的画面
 - screenfetch  或 neofetch    发行版logo及系统简要信息显示
 - fortune     输入随机格言/诗句等
-  - 包含中文或中文版的fortune：fortune-zh或者fortune-mod-zh (包名在不同发行版有出入)   
+  - 包含中文或中文版的fortune：fortune-zh或者fortune-mod-zh (包名在不同发行版有出入)
   - cowfortune    将fortune和cowsay配合
 - asciiquarium    水族馆
 
@@ -379,7 +379,7 @@
 
 - man-pages-zh_cn和man-pages-zh_tw  [中文man手册](https://github.com/man-pages-zh/manpages-zh)
 - 电源节能
-  - tlp   电源管理工具（默认配置已针对电池优化，安装后以systemctl enable tlp启用即可） 
+  - tlp   电源管理工具（默认配置已针对电池优化，安装后以systemctl enable tlp启用即可）
   - laptop-mode-tools    笔记本电源管理
   - powertop    针对intel的节电工具
 - fancontrol   风扇控制（图形界面fancontrol-gui）
@@ -427,7 +427,7 @@
   - xflux
 - 更换壁纸
   - wallch
-  - variety   
+  - variety
 
 # 开发工具
 

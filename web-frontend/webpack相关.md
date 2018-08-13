@@ -229,15 +229,13 @@ new htmlWebpackPlugin({
 
 ### html-withimg-loader
 
-[html-withimg-loader](https://github.com/wzsxyz/html-withimg-loader)配置loader：
+[html-withimg-loader](https://github.com/wzsxyz/html-withimg-loader)配置rules：
 
 ```javascript
-loaders: [
-    {
-        test: /\.(htm|html)$/i,
-        loader: 'html-withimg-loader'
-    }
-]
+{
+      test: /\.(htm|html)$/i,
+      loader: 'html-withimg-loader'
+}
 ```
 
 - 可直接在html的img标签的src中使用图片路径
@@ -371,7 +369,7 @@ module.exports = {
   test: /\.js$/,
   exclude: /(node_modules|browser_components)/,
   use: {
-    loader: 'babel-loader,
+    loader: 'babel-loader',
     options: {
       cacheDirectory:true,
       presets: ['@babel/preset-env'],
@@ -439,7 +437,7 @@ url-loader包含file-loader，url-loader主要用于处理小图片，其可以�
 html或js中引用的图片大于limit的值时，要使用reqiure：
 
 ```html
-<img src={require('../img/image.png')} />
+<img src=<%=require( './logo.png') %> />
 ```
 
 或使用[html-withimg-loader](https://github.com/wzsxyz/html-withimg-loader)
@@ -547,10 +545,10 @@ module.exports = {
 
 使用file-loader/url-loader后，图片体积大于url-loader配置中的limit的不会被打包（小于url-loader配置中limit的将被转化为base64）。可选解决方式：
 
-- 使用reqiure
+- 使用reqiure引入
 
   ```html
-  <img src={require('../img/image.png')} />
+  <img src=<%=require( '.logo.png') %>/>
   ```
 
-- 使用[html-withimg-loader](https://github.com/wzsxyz/html-withimg-loader)
+- 改用[html-withimg-loader](https://github.com/wzsxyz/html-withimg-loader)

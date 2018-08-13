@@ -225,7 +225,7 @@ docker rm -v $(docker ps -aq -f status=exited)
 
 - `-d`以守护进程运行 （run的参数）
 
-- `-p 容器端口:宿主机器端口`  映射容器某个端口到宿主机某个端口
+- `-p 宿主机端口:容器端口`  映射容器某个端口到宿主机某个端口
 
 - `-h 主机名`或`--hostname 主机名 `设置主机名
 
@@ -284,6 +284,12 @@ docker rm -v $(docker ps -aq -f status=exited)
 - 修改容器名 `dockerename <name> <new-name>`
 - 删除容器 `docker rm <container>`
 
+## 运行容器中的命令
+
+exec 不进入容器终端而运行容器中的命令。
+
+`docker exec [option] <docker-name> <command>`
+
 ## 启动、进入、重启和停止
 
 对已经创建的容器执行启动、进入、重启和停止等操作
@@ -310,18 +316,18 @@ docker run <container> <command>
 
   - `-a`  或 `--attach`  启动并进入容器终端  相当于组合执行start和attach
 
-- 进入到已经启用的容器的终端
+- 进入到已经启用的容器的终端可以使用attach或exec
 
-  - attach 直接进入容器 **启动命令** 的终端，不会启动新的进程。**退出容器时，容器会停止。**
+  - attach直接进入容器的默认终端，不会启动新的进程。**退出容器时，容器会停止。**
 
-  - exec 是在容器中打开新的终端，并且可以启动新的进程，退出容器时，容器仍可运行。
+  - exec使用交互参数启动指定的容器中的终端，退出容器时，容器仍在运行。
 
-    使用exec时进入docker终端需要使用`-it`参数开启交互式tty并指定shell。（因为exec的主要作用是执行命令，而attach的作用则是为了连接到容器终端）
-
-    exec的一些参数：
+    使用exec时进入docker终端需要使用-it参数开启交互式shell程序。
 
     - `-i`  交互式操作  `-t`启用tty
     - `-u`指定用户 `-w`指定工作目录
+
+  exec的主要作用是执行命令，而attach的作用则是为了连接到容器终端。
 
 - 退出容器终端
 
@@ -337,12 +343,6 @@ docker run <container> <command>
 - 终止
   - stop 停用容器
   - kill  发送 SIGKILL 快速停止容器
-
-### 运行容器中的命令
-
-exec 不进入容器终端而运行容器中的命令。
-
-`docker exec [option] <docker-name> <command>`
 
 # 网络
 
@@ -388,3 +388,6 @@ docker默认创建三种网络类型：bridge、host和none。创建容器时可
 
 # 存储
 
+## 复制
+
+docker cp 宿主机文件 容器:容器目录

@@ -10,17 +10,37 @@ PS1="[\u @ \h > \w ] \$ "
 
 innerip=`ip addr | grep -o -P '1[^2]?[0-9]?(\.[0-9]{1,3}){3}(?=\/)'`
 gateway=`ip route | grep 'via' |cut -d ' ' -f 3 |uniq`
-echo -e "\e[1m `uname -srm`\e[0m  \nGATEWAY:\e[1;32m$gateway\e[0m <-- IP:\e[1;35m$innerip\e[0m \n \e[1;36m `date` \e[0m"
+echo -e "\e[1m `uname -srm`\e[0m"
+echo -e "\e[1;32m $gateway\e[0m <-- IP:\e[1;35m$innerip\e[0m"
+echo -e "\e[1;36m `date` \e[0m"
 
 
 # ******** PATH ********
-#export PATH="$PATH:`yarn global bin`"
-
 # proxy | use privoxy transfer socks5 to http
-#export http_proxy=http://192.168.1.1:8010
-#export https_proxy=http://192.168.1.1:8010
+#export ALL_PROXY="socks5://127.0.0.1:1080"
+#export no_proxy=
+#export ftp_proxy=
+#export socket_proxy=
+#export http_proxy="http://127.0.0.1:8010"
+#export https_proxy="http://127.0.0.1:8010"
 
+alias proxyon="export http_proxy='http://127.0.0.1:8010';export https_proxy='http://127.0.0.1:8010'"
+alias proxyoff="unset https_proxy;unset https_proxy"
 
+proxyon
+if [[ -n `pgrep shadowsocks` || `pgrep ss-qt5` || `pgrep sslocal` ]]
+then
+  echo -e "\e[37m shadowsocks is running.\e[0m \e[35m爱国爱党 科学上网 文明富强\e[0m"
+else
+  echo -e "\e[35m 你没有进行科学上网，无法学习国外的先进科学技术！\e[0m"
+fi
+
+if [[ -n `pgrep privoxy` ]]
+then
+  echo -e "\e[37m privoxy is running, and http(s) proxy listen at\e[0m \e[1m 127.0.0.1:8010\e[0m"
+else
+  echo -e "\e[35m privoxy is not installed \e[0m"
+fi
 # ******** alias ********
 
 # ----- device&system -----
@@ -82,6 +102,8 @@ alias tree='tree -C -L 1 --dirsfirst'
 alias up='yay'
 alias pacman='sudo pacman'
 alias orphan='pacman -Rscn $(pacman -Qdttq)' 
+
+alias aurinfo='makepkg --printsrcinfo > .SRCINFO'
 
 # temporary locale
 alias x='export LANG=en_US.UTF-8 LC_CTYPE=en_US.UTF-8 LC_MESSAGES=en_US.UTF-8 && startx'

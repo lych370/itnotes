@@ -35,11 +35,20 @@ LNMP（linux,nginx,mariadb,php）部署，以下默认在root权限下操作，�
   ```shell
   user = nginx #修改用户为nginx
   group = nginx #修改组为nginx
+  
+  #...
+  #取消以下行的注释以启用 php-fpm 的系统环境变量
+  env[HOSTNAME] = $HOSTNAME
+  env[PATH] = /usr/local/bin:/usr/bin:/bin
+  env[TMP] = /tmp
+  env[TMPDIR] = /tmp
+  env[TEMP] = /tmp
   ```
 
 - 将储存php会话(session)记录文件夹权限赋给nginx组的nginx（默认属于apache组的apache）：
 
   ```shell
+  mkdir -p /var/lib/php/session
   chown nginx:nginx /var/lib/php/session -R
   ```
 
@@ -72,9 +81,9 @@ server{
 
 ```nginx
 location ~ \.php$ {
-  fastcgi_pass 127.0.0.1:9000;
-  fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
-  include fastcgi_params;
+    fastcgi_pass 127.0.0.1:9000;
+    fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
+    include fastcgi_params;
 }
 ```
 

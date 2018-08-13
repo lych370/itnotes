@@ -20,9 +20,9 @@
 
    附 media player indicator设置中l展示播放信息的pango设置示例：
 
-  ```html
- <span foreground="#eb3f2f">{trackTitle}</span> --> <span foreground="#81c2d6">{trackAlbum}</span> @ <span foreground="#c3bed4">{trackArtist}</span>
-  ```
+   ```html
+   <span foreground="#eb3f2f">{trackTitle}</span> --> <span foreground="#81c2d6">{trackAlbum}</span> @ <span foreground="#c3bed4">{trackArtist}</span>
+   ```
 
 
 - topicons plus    顶部栏显示程序托盘图标
@@ -195,7 +195,7 @@ gnome的设置中的夜光（night-light）默认色温值是4000。
 - 笔记本用户推荐安装[tlp](https://wiki.archlinux.org/index.php/TLP)或者[laptop-mode-tools]()
 - intel可安装[powertop](https://wiki.archlinux.org/index.php/Powertop)
 
-# 使用技巧
+# 其他技巧
 
 *以下是没有更改默认设置的情况下*
 

@@ -1,11 +1,11 @@
 [Hotkey]
-# 切換啟用或非啟用輸入法
+# Trigger Input Method
 TriggerKey=SUPER_SPACE
-# 只在用額外切換鍵取消啟動後才使用它進行切換
+# Use extra trigger key only after using it to inactivate
 # Available Value:
 # True False
 UseExtraTriggerKeyOnlyWhenUseItToInactivate=False
-# 額外的啟用輸入法快捷鍵
+# Extra key for trigger input method
 # Available Value:
 # R_CTRL
 # R_SHIFT
@@ -28,119 +28,119 @@ UseExtraTriggerKeyOnlyWhenUseItToInactivate=False
 # Disabled
 # Custom
 SwitchKey=SHIFT Both
-# 自訂切換鍵
+# Custom switch key
 #CustomSwitchKey=
-# 啟用輸入法
+# Activate input method
 #ActivateKey=
-# 不啟用輸入法
+# Inactivate Input Method
 #InactivateKey=
-# 啟用輸入法間切換
+# Enable Hotkey to scroll Between Input Method
 # Available Value:
 # True False
 #IMSwitchKey=True
-# 輸入法間切換時包含未啟用狀態
+# Include Inactivate when scrolling between Input Method
 # Available Value:
 # True False
 IMSwitchIncludeInactive=True
-# 輸入法切換鍵
+# Scroll between Input Method
 # Available Value:
 # CTRL_SHIFT
 # ALT_SHIFT
 # CTRL_SUPER
 # ALT_SUPER
 #IMSwitchHotkey=CTRL_SHIFT
-# 重新載入設定
+# Reload configuration
 #ReloadConfig=CTRL_5
-# 輸入間隔
+# Interval of Two Key Input
 #TimeInterval=250
-# 切換虛擬鍵盤
+# Switching Virtual Keyboard
 VKSwitchKey=ALT_SUPER_V SHIFT_SUPER_V
-# 切換聯想模式
+# Switching Remind Mode
 #RemindSwitchKey=
-# 切換全形字元模式
+# Switching Full Width Character Mode
 FullWidthSwitchKey=SHIFT_SPACE SHIFT_SPACE
-# 切換全形標點符號
+# Switch Full Width Punc Mode
 PuncSwitchKey=CTRL_. CTRL_.
-# 上一頁
+# Prev Page
 PrevPageKey=PGUP UP
-# 下一頁
+# Next Page
 NextPageKey=PGDN DOWN
-# 選擇第二第三候選詞
+# Choose Second and Third Candidate Word
 #SecondThirdCandWordKey=
-# 保存所有設定及輸入歷史
+# Saving All Config and Input History
 #SaveAllKey=CTRL_ALT_S
 # Switch Embedded Preedit
 #SwitchPreedit=CTRL_ALT_P
-# 前一個候選字
+# Previous Candidate Word
 #PrevWord=SHIFT_TAB
-# 下一個候選字
+# Next Candidate Word
 #NextWord=TAB
 
 [Program]
-# Fcitx 真正啟動前延遲的秒數
+# Seconds sleep before fcitx really start
 DelayStart=88
-# 在視窗間共享狀態
+# Share State Among Window
 # Available Value:
 # No
 # All
 # PerProgram
 ShareStateAmongWindow=All
-# 預設輸入法狀態
+# Default Input Method State
 # Available Value:
 # Inactive
 # Active
 #DefaultInputMethodState=Inactive
 
 [Output]
-# 數字後跟半形標點符號
+# Type half width Punc After a Number
 # Available Value:
 # True False
 #HalfPuncAfterNumber=True
-# 聯想模式停用翻頁
+# Disable Paging in Remind Mode
 # Available Value:
 # True False
 #RemindModeDisablePaging=True
-# 切換狀態時提交
+# Commit when toggle state
 # Available Value:
 # True False
 #SendTextWhenSwitchEng=True
-# 候選字數
+# Candidate Word Number
 CandidateWordNumber=10
-# 提示詞庫中字詞
+# Give the tips of Phrase
 # Available Value:
 # True False
 #PhraseTips=True
-# 未聚焦視窗時，不要提交預編輯文字
+# Do not commit preedit text when unfocus a window
 # Available Value:
 # True False
 #DontCommitPreeditWhenUnfocus=False
 
 [Appearance]
-# 切換輸入法時顯示輸入法提示
+# Show Input Method Hint After Input method changed
 # Available Value:
 # True False
 #ShowInputWindowAfterTriggering=True
-# 獲得輸入焦點並且輸入法變化時顯示輸入法提示
+# Show Input Method Hint After Input method changed and Focus in
 # Available Value:
 # True False
 #ShowInputWindowWhenFocusIn=False
-# 輸入法提示只在啟用狀態顯示
+# Input Method Hint will be only shown when state is active
 # Available Value:
 # True False
 #ShowInputWindowOnlyWhenActive=True
-# 顯示輸入速度
+# Show Input Speed
 # Available Value:
 # True False
-#ShowInputSpeed=False
-# 顯示版本
+ShowInputSpeed=True
+# Show Version
 # Available Value:
 # True False
 #ShowVersion=False
-# 只有預編輯字串時不顯示輸入視窗
+# Do not show input window if there is only preedit string
 # Available Value:
 # True False
 #HideInputWindowWhenOnlyPreeditString=False
-# 只有一個候選詞和預編輯字串時不顯示輸入視窗
+# Do not show input window if there is only one candidate and preedit
 # Available Value:
 # True False
 #HideInputWindowWhenOnlyOneCandidate=False

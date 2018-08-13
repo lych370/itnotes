@@ -255,7 +255,7 @@ arch-chroot /mnt
 
 >HOOKS="base udev autodetect modconf block  filesystems keyboard fsck"
 
-在block 和 filesystems之间添加**`lvm2`**（注意lvm2和block及filesystems之间有一个空格），类似：
+在block 和 filesystems之间添加`lvm2`（注意lvm2和block及filesystems之间有一个空格），类似：
 
 > HOOKS="base udev autodetect modconf block lvm2 filesystems keyboard fsck"
 
@@ -289,21 +289,15 @@ mkinitcpio -p linux
 
 linux时钟分为系统时钟（system clock）和硬件时钟（Real Time Clock, RTC——即实时时钟，电脑主板记上的时钟）。
 
-（可选）设置时区前可以先查看和校准（如果需要）系统时间，了解硬件时钟的情况：
-
-```shell
-date #查看当前系统时间
-timedatectl  #查看系统时间、硬件时间、标准时间、ntp时间同步等设置情况
-date -s "2046-04-26 13:14:20"  #设置时间 ，格式：年-月-日 时:分:秒"
-ntpdate 0.arch.pool.ntp.org  #或者与从公共时间服务器同步时间
-```
-
 设置时区，将系统时间和硬件时间统一：
 
 ```shell
+date #查看当前系统时间
 ln -sf /usr/share/zoneinfo/Asia/Shanghai /etc/localtime    # 设置时区 示例为中国东八区标准时间--Asia/Shanghai
 hwclock -w -u    #将当前系统时间写入到硬件时钟  并使用utc时间（推荐）
+# hwclock -s -u  #将当前硬件时间写入到系统时钟  并使用utc时间
 ```
+
 ## 主机名
 
 ```shell
@@ -382,11 +376,11 @@ pacman -S iw wpa_supplicant dialog    #无线网络需要安装这些工具使�
 
 ```shell
 pacman -S xf86-video-vesa     #通用显卡
-pacman -S xf86-video-intel     #intel集成显卡
+pacman -S xf86-video-intel     #intel集成显卡  可不安装 内核中已经集成开源实现
 pacman -S xf86-video-ati        #amd/ati
 pacman -S nvidia                       #nvidia
 ```
-注意：不安装显卡驱动可能造成进入图形界面出错卡死（尤其是nvidia用户），请务必先安装显卡驱动！
+注意：带有独立显卡的设备不安装显卡驱动可能造成进入图形界面出错卡死，请务必先安装显卡驱动！
 
 双显卡设备，可参看后文[双显卡管理](#双显卡管理)。
 
@@ -512,6 +506,8 @@ pacman -S ttf-arphic-uming    #文鼎明体
 pacman -S alsa-utils
 alsamixer    #安装上一个包后可使用该命令控制声音设备
 ```
+
+如果设备[没有声音](#没有声音)，可以使用`alsamixer`解除静音。
 
 ## 软件包管理器
 
@@ -667,6 +663,20 @@ ntfs-3g /dev/sda5 /mnt/ntfs       #挂载分区到/mnt/ntfs目录
 rmmod pcspkr    #暂时关闭
 echo "blacklist pcspkr" > /etc/modprobe.d/nobeep.conf   #直接屏蔽
 ```
+## 没有声音
+
+一般出现在轻量桌面(如xfce)或窗口管理器上，因为archlinux安装后默认处于静音状态。
+
+安装`alsa-utils`，然后执行`alsamixer`进入 其ncurses 界面：
+
+使用 ← 和 → 方向键移动，选中 Master 和 PCM 声道，按下 m 键解除静音（静音状态下其显示有`mm`字样）使用 ↑ 方向键增加音量。
+
+或者直接使用以下命令解除静音：
+
+```shell
+amixer sset Master unmute
+```
+
 ## 双显卡管理
 
 更多内容可参看[双显卡管理](../laptop笔记本相关.md#显卡管理)

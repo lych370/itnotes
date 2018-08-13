@@ -32,7 +32,7 @@ NISDOMAIN=cluster
 YPSERV_ARGS="-p 1011" #可选 指定运行端口
 ```
 
-###  主配置文件/etc/ypserv.conf
+###  *主配置文件/etc/ypserv.conf
 
 可选，可直接使用预设值。配置允许/禁止访问NIS服务器的网域，编辑`etc/ypserv.conf`，添加类似：
 
@@ -50,7 +50,7 @@ YPSERV_ARGS="-p 1011" #可选 指定运行端口
 192.168.100.101  master.cluster
 ```
 
-### nis客户端密码修改功能
+### *nis客户端密码修改功能
 
 可选，该配置启用可启用NIS 用户端的密码修改功能。
 

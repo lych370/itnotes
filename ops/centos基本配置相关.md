@@ -90,14 +90,3 @@ yum groupinstall "GNOME Desktop"
 systemctl enable gdm
 systemctl start gdm
 ```
-
-# 常用工具包
-
-最小化安装后可能缺少某些命令，需要安装相应的软件包。下面列表中，前面为命令名，后面为安装包名。
-
-- cpuinfo  
-
-# 其他
-
-- 软件包版本锁定工具`yum-version-lock`
-- 局域网内可不设置gateway

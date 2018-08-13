@@ -1,45 +1,6 @@
-[Added Associations]
-inode/directory=org.gnome.Nautilus.desktop
-text/plain=org.gnome.gedit.desktop;typora.desktop;visual-studio-code.desktop;vim.desktop;
-text/html=org.gnome.gedit.desktop;firefox.desktop;
-text/xml=firefox.desktop;
-application/xhtml+xml=firefox.desktop;
-application/vnd.mozilla.xul+xml=firefox.desktop;
-text/mml=firefox.desktop;
-x-scheme-handler/https=firefox.desktop;
-text/x-scss=org.gnome.gedit.desktop;
-application/javascript=org.gnome.gedit.desktop;
-text/css=org.gnome.gedit.desktop;visual-studio-code.desktop;
-application/vnd.openxmlformats-officedocument.wordprocessingml.document=cxmenu-cxoffice-2bdfd705-3308-4193-ae0c-f8d4947d8ca0-3ii0rqp-Word.desktop;
-application/xml=org.gnome.gedit.desktop;
-image/png=eog.desktop;mypaint.desktop;gimp.desktop;
-application/zip=org.gnome.FileRoller.desktop;cxmenu-cxoffice-2bdfd705-3308-4193-ae0c-f8d4947d8ca0-3ii0rqp-Word.desktop;
-application/x-shellscript=org.gnome.gedit.desktop;vim.desktop;
-image/jpeg=eog.desktop;gimp.desktop;
-text/markdown=typora.desktop;org.gnome.gedit.desktop;
-application/vnd.openxmlformats-officedocument.spreadsheetml.sheet=cxmenu-cxoffice-2bdfd705-3308-4193-ae0c-f8d4947d8ca0-3ii0rqp-Excel.desktop;
-application/vnd.ms-excel=cxmenu-cxoffice-2bdfd705-3308-4193-ae0c-f8d4947d8ca0-3ii0rqp-Excel.desktop;
-model/x.stl-binary=libreoffice-calc.desktop;
-application/x-compressed-tar=org.gnome.FileRoller.desktop;
-application/octet-stream=org.gnome.gedit.desktop;
-x-scheme-handler/sms=org.gnome.Shell.Extensions.GSConnect.desktop;
-text/x-readme=org.gnome.gedit.desktop;typora.desktop;
-text/x-python=visual-studio-code.desktop;
-application/json=org.gnome.gedit.desktop;
-application/x-extension-html=visual-studio-code.desktop;org.gnome.gedit.desktop;
-application/vnd.openxmlformats-officedocument.presentationml.presentation=cxmenu-cxoffice-acb35535-bd47-4d9b-a57d-8103146abee1-3ii0rqp-PowerPoint.desktop;cxmenu-cxoffice-2bdfd705-3308-4193-ae0c-f8d4947d8ca0-3ii0rqp-PowerPoint.desktop;
-text/x-makefile=visual-studio-code.desktop;org.gnome.gedit.desktop;
-application/x-php=visual-studio-code.desktop;org.gnome.gedit.desktop;sublime_text_3.desktop;
-application/x-cd-image=gnome-disk-image-mounter.desktop;
 
-[Default Applications]
-inode/directory=Nautilus.desktop
-x-scheme-handler/http=firefox.desktop
-text/html=MockingBot.desktop
-text/xml=firefox.desktop
-application/xhtml+xml=firefox.desktop
-application/vnd.mozilla.xul+xml=firefox.desktop
-text/mml=firefox.desktop
-x-scheme-handler/https=firefox.desktop
-x-scheme-handler/mockingbot=MockingBot.desktop
-x-scheme-handler/modao=MockingBot.desktop
+[Added Associations]
+inode/directory=dolphin.desktop;org.gnome.Nautilus.desktop
+x-scheme-handler/sms=org.gnome.Shell.Extensions.GSConnect.desktop;
+application/x-shellscript=org.gnome.gedit.desktop;visual-studio-code.desktop;
+text/plain=org.gnome.gedit.desktop;

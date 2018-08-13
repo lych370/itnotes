@@ -17,7 +17,7 @@
 # 远程登录
 
 ```bash
-ssh [-p port] <user>e@<host>     #<user>是用户名, <host>是该ssh服务器的主机地址 
+ssh [-p port] <user>e@<host>     #<user>是用户名, <host>是该ssh服务器的主机地址
 ssh -p 2333 <user>@<host>     #-p指定端口（更改了默认端口22时需要使用）
 ```
 - port：要登录的远程主机的端口
@@ -67,7 +67,7 @@ ssh -p 2333 <user>@<host>     #-p指定端口（更改了默认端口22时需要
   **~/.ssh/authorized_keys文件的权限为600**，**~/.ssh文件夹权限为700**
 
   ```shell
-  chmod 600 ~/.ssh/authorized_keys && chmod 700 ~/.ssh
+  chmod 600 ~/.ssh* && chmod 700 ~/.ssh
   ```
 
 - 客户端存在多个密钥对
@@ -147,9 +147,7 @@ ssh隧道又被称作ssh端口转发，因为ssh隧道**通常会绑定一个本
 - 开启/关闭端口转发，在`sshd_config`文件根据需要设置`yes`或`no`：
 
   ```shell
-  AllowAgentForwarding yes
-  AllowTcpForwarding yes
-  X11Forwarding yes
+  GatewayPorts yes
   ```
 
 
@@ -204,7 +202,7 @@ ssh -fDN 1080 root@192.168.1.2  #将通过1080端口的数据转发到192.168.1.
 将本地机(客户机)的某个端口转发到远端指定机器的指定端口。访问本地端口即相当于访问远程主机端口。
 
 ```shell
-ssh -L [bind_address:]<local-port>:<host>:<host-port> <user>@<ssh-server> 
+ssh -L [bind_address:]<local-port>:<host>:<host-port> <user>@<ssh-server>
 ssh -fDNL 5901:192.168.2.10:5900 root@192.168.2.10  #将本地5901端口数据转发到192.168.2.10:5900端口
 ```
 
@@ -271,7 +269,7 @@ scp -P 999 ~/.ssh/id_rsa.pub root@ip:/root.ssh/authorized_keys
 
 
 - 更改默认的22端口
-
+  修改服务器的`/etc/ssh/sshd_config`文件中的`Port` 值为其他可用端口。
 - 使用非对称加密密钥
 
   ```shell
@@ -283,13 +281,16 @@ scp -P 999 ~/.ssh/id_rsa.pub root@ip:/root.ssh/authorized_keys
 - 用户控制
 
   - 禁用root登录
+    修改服务器的`/etc/ssh/sshd_config`文件中的`PermitRootLogin` 值改为no
+    - 禁止root用户使用密码登陆
+      仅禁止使用密码登陆root账户（可使用密钥登陆）， 将服务器的`/etc/ssh/sshd_config`文件中的`PermitRootLogin` 值改为`prohibit-password`
 
   - 限制用户登录shell
     例如为建立git仓库而使用的git用户，找到`/etc/passwd`文件中git所在行，将其中的`/bin/bash`(根据不同shell可能是/bin/zsh或者其他的)改为`/bin/git-shell`，使得git用户无法登录shell，但仍可通过命令行访问git仓库。
 
   - 完全禁止登录shell
 
-    - 在`/etc/passwd`文件中找到该用户所在行，将`/bin/bash`字样改为`/sbin/nologin`。	
+    - 在`/etc/passwd`文件中找到该用户所在行，将`/bin/bash`字样改为`/sbin/nologin`。
 
     - 在ssh配置文件中添加`DenyUsers username`（username即用户名，下同）。
 

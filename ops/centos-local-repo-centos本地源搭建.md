@@ -26,7 +26,7 @@ mount -o loop ~/centos.iso /srv/repo
 
 ### 同步公共软件源
 
-使用rsync工具同步，需要该站点支持rsync协议，这里以[清华大学开源软件镜像](https://mirrors.tuna.tsinghua.edu.cn/)站--https://mirrors.tuna.tsinghua.edu.cn/为例。
+使用rsync工具同步，需要该站点支持rsync协议，这里以[中国科技大学开源软件镜像](https://mirrors.ustc.edu.cn/)站--https://mirrors.ustc.edu.cn/为例。（参看中科大源同步方法注意事项）
 
 1. 确保已经安装createrepo和rsync
 
@@ -47,19 +47,19 @@ mount -o loop ~/centos.iso /srv/repo
       #!/bin/sh
       #centos repo rsync
       #base
-      rsync -avz --exclude-from=./exclude.list rsync://mirrors.tuna.tsinghua.edu.cn/centos/7/os/x86_64/ /srv/repo/base/
+      rsync -avz --exclude-from=./exclude.list rsync://rysnc.mirrors.ustc.edu.cn/centos/7/os/x86_64/ /srv/repo/base/
       createrepo /srv/repo/base/
 
       #updates
-      rsync -avz --exclude-from=./exclude.list rsync://mirrors.tuna.tsinghua.edu.cn/centos/7/updates/x86_64/ /srv/repo/updates/
+      rsync -avz --exclude-from=./exclude.list rsync://rysnc.mirrors.ustc.edu.cn/centos/7/updates/x86_64/ /srv/repo/updates/
       createrepo /srv/repo/updates/
 
       #extras
-      rsync -avz --exclude-from=./exclude.list rsync://mirrors.tuna.tsinghua.edu.cn/centos/7/extras/x86_64/ /srv/repo/extras/
+      rsync -avz --exclude-from=./exclude.list rsync://rysnc.mirrors.ustc.edu.cn/centos/7/extras/x86_64/ /srv/repo/extras/
       createrepo /srv/repo/extras/
 
       #epel
-      rsync -avz --exclude-from=./exclude.list rsync://mirrors.tuna.tsinghua.edu.cn/epel/7/x86_64/ /srv/repo/epel/
+      rsync -avz --exclude-from=./exclude.list rsync://rysnc.mirrors.ustc.edu.cn/epel/7/x86_64/ /srv/repo/epel/
       createrepo /srv/repo/epel/
       ```
 
@@ -96,7 +96,17 @@ mount -o loop ~/centos.iso /srv/repo
 
    放置一些单独的软件包。
 
-   建立一个文件夹如`rpms`，将软件包放到文件下即可。
+   建立一个文件夹如`rpms`，将软件包放到文件下，使用`createrepo`工具生成rpm包信息文件：
+
+```shell
+createrepo -v <目录名>  #对该目录下所有rpm包生成信息文件
+```
+
+当添加新的rpm包时，需要更新信息文件：
+
+```shell
+createrepo -v --update  <目录名>  #更新信息文件
+```
 
 ## repo文件
 
@@ -152,8 +162,4 @@ curl -O /etc/yum.repos.d/local.repo http://192.168.1.251/local.repo
 yum update
 ```
 
-客户机就可以从服务器上下载软件包了。
-
-   
-
-   
+##### 客户机就可以从服务器上下载软件包了。
