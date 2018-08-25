@@ -48,7 +48,7 @@ pacman -S shotwell gimp rhythmbox spotify totem gst-plugins-ugly gst-libav grilo
 pacman -S arc-gtk-theme materia-gtk-theme numix-circle-icon-theme-git papirus-icon-theme --noconfirm
 
 # shell extensions
-pacman -S gnome-shell-extension-topicons-plus-git gnome-shell-extension-gsconnect gnome-shell-extension-dash-to-dock-git --noconfirm
+pacman -S gnome-shell-extension-topicons-plus-git gnome-shell-extension-dash-to-dock-git --noconfirm
 
 # arhive
 pacman -S expect --noconfirm

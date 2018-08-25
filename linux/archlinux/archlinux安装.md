@@ -376,11 +376,16 @@ pacman -S iw wpa_supplicant dialog    #无线网络需要安装这些工具使�
 
 ```shell
 pacman -S xf86-video-vesa     #通用显卡
-pacman -S xf86-video-intel     #intel集成显卡  可不安装 内核中已经集成开源实现
-pacman -S xf86-video-ati        #amd/ati
-pacman -S nvidia                       #nvidia
+pacman -S xf86-video-intel     #intel核心显卡  可不安装 内核中已经集成开源实现
+pacman -S nvidia                       #nvidia显卡驱动（包含vulkan）
+pacman -S mesa                       #amd显卡使用开源mesa驱动即可
+#vulkan 支持
+#pacman -S vulkan-intel    #intel显卡
+#pacman -S vulkan-radeon    #amd/ati显卡
 ```
-注意：带有独立显卡的设备不安装显卡驱动可能造成进入图形界面出错卡死，请务必先安装显卡驱动！
+注意：
+
+带有独立显卡的设备不安装显卡驱动可能造成进入图形界面出错卡死，请务必先安装显卡驱动！
 
 双显卡设备，可参看后文[双显卡管理](#双显卡管理)。
 

@@ -27,20 +27,6 @@ echo -e "\e[1;36m `date` \e[0m"
 alias proxyon="export http_proxy='http://127.0.0.1:8010';export https_proxy='http://127.0.0.1:8010'"
 alias proxyoff="unset https_proxy;unset https_proxy"
 
-proxyon
-if [[ -n `pgrep shadowsocks` || `pgrep ss-qt5` || `pgrep sslocal` ]]
-then
-  echo -e "\e[37m shadowsocks is running.\e[0m \e[35m爱国爱党 科学上网 文明富强\e[0m"
-else
-  echo -e "\e[35m 你没有进行科学上网，无法学习国外的先进科学技术！\e[0m"
-fi
-
-if [[ -n `pgrep privoxy` ]]
-then
-  echo -e "\e[37m privoxy is running, and http(s) proxy listen at\e[0m \e[1m 127.0.0.1:8010\e[0m"
-else
-  echo -e "\e[35m privoxy is not installed \e[0m"
-fi
 # ******** alias ********
 
 # ----- device&system -----
@@ -188,7 +174,11 @@ alias stock="curl -s http://hq.sinajs.cn/list=sz000066|iconv -f gbk -t utf8|cut 
 
 # no network
 
-alias nonetwork='killall megasync geary telegram-desktop ss-qt5 workrave'
+alias nonetwork='killall megasync evolution nextcloud telegram-desktop ss-qt5 workrave'
+
+#---nmap
+#scan alive hosts
+alias 'nmap-hosts'="sudo nmap `echo $gateway|cut -d '.' -f 1-3`.0/24"
 
 # bash-powerline : https://github.com/riobard/bash-powerline
 source ~/.bash-powerline.sh

@@ -285,10 +285,7 @@ scp -P 999 ~/.ssh/id_rsa.pub root@ip:/root.ssh/authorized_keys
     - 禁止root用户使用密码登陆
       仅禁止使用密码登陆root账户（可使用密钥登陆）， 将服务器的`/etc/ssh/sshd_config`文件中的`PermitRootLogin` 值改为`prohibit-password`
 
-  - 限制用户登录shell
-    例如为建立git仓库而使用的git用户，找到`/etc/passwd`文件中git所在行，将其中的`/bin/bash`(根据不同shell可能是/bin/zsh或者其他的)改为`/bin/git-shell`，使得git用户无法登录shell，但仍可通过命令行访问git仓库。
-
-  - 完全禁止登录shell
+  - 禁止登录shell
 
     - 在`/etc/passwd`文件中找到该用户所在行，将`/bin/bash`字样改为`/sbin/nologin`。
 
@@ -306,3 +303,26 @@ scp -P 999 ~/.ssh/id_rsa.pub root@ip:/root.ssh/authorized_keys
 
     - 允许单用户：`AllowUsers username`
     - 允许用户组：`AllowGroups groupname`（groupname是组名）
+
+# 问题解决
+
+- > no matching key exchange method found. Their offer: diffie-hellman-group-exchange-sha1,diffie-hellman-group1-sha1
+
+  ssh server 不支持diffie-hellman-group1-sha1造成的，服务器ssh版本过低（或者说客户端ssh版本过高）
+
+  升级服务端ssh或者在客户端ssh的config中添加
+
+  ```shell
+  KexAlgorithms +diffie-hellman-group1-sha1
+  ```
+
+- > no compatible cipher.The server supports these cipher:  aes128-ctr,aes192-ctr,aes256-ctr
+
+  ssh服务端不支持某些协议
+
+  升级服务端ssh或者在客户端ssh的config中添加
+
+  ```shell
+  Ciphers aes128-ctr,aes192-ctr,aes256-ctr,aes128-cbc,3des-cbc,aes192-cbc,aes256-cbc
+  
+  ```

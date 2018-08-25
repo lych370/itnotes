@@ -1,7 +1,7 @@
 #!/bin/sh
 pacman -S cups ghostscript gsfonts cups-pdf gutenprint --noconfirm
-sudo systemctl start org.cups.cupsd.service
-sudo -S usermod -aG cups `whoami`
+systemctl start org.cups.cupsd.service
+usermod -aG cups `whoami`
 newgrp cups
 
 
